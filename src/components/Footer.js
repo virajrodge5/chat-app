@@ -5,7 +5,7 @@ export const Footer = () => {
         <Fragment>
             <div class="footer-padding">
                 <div class="footer">
-                    <p>viraj.R</p>
+                    <a href="https://portfolio-virajrodge5.vercel.app/"><p>viraj.R</p><a>
                 </div>
             </div>
         </Fragment>
