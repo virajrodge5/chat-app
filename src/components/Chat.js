@@ -7,7 +7,7 @@ import {
   query,
   where,
   orderBy,
-} from "firebase/firestore"; //Like adding a row in the database table
+} from "firebase/firestore"; 
 import { auth, db } from "../firebase-config";
 import "../styles/Chat.css";
 
@@ -16,20 +16,20 @@ export const Chat = (props) => {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const messagesRef = collection(db, "messages"); //To say which collection the Doc has to be added to
+  const messagesRef = collection(db, "messages"); 
 
   useEffect(() => {
-    const queryMessages = query(messagesRef, where("room", "==", room), orderBy("createdAt")); //First argument is which collection query exists in, second specifies the condition under which it should happen
-    const unsubscribe = onSnapshot(queryMessages, (snapshot) => {        //Provided by firebase and helps to listen to changes, the callback function runs everytime there is aby change in the query
+    const queryMessages = query(messagesRef, where("room", "==", room), orderBy("createdAt")); 
+    const unsubscribe = onSnapshot(queryMessages, (snapshot) => {        
       
       let messages = [];
       snapshot.forEach((doc) => {
-        messages.push({ ...doc.data(), id: doc.id }); //Setting the new object of messages to be equal to whatever data already existed in the doc (by using ...doc.data()) plus the new id field which is obtained by sayin doc.id. If id already existed in the doc.data a mere messages.push(...doc.data) would have sufficed
+        messages.push({ ...doc.data(), id: doc.id });
       });
       setMessages(messages);
     });
 
-    return () => unsubscribe(); //Whenever there is a useEffect subscribed to a listening service a cleanup function is used
+    return () => unsubscribe();
   }, []);
 
   const handleSubmit = async (event) => {
@@ -38,7 +38,7 @@ export const Chat = (props) => {
 
     await addDoc(messagesRef, {
       text: newMessage,
-      createdAt: serverTimestamp(), //Provided by firebase to store the time at which the message was create din order to arrannge them accordingly
+      createdAt: serverTimestamp(),
       user: auth.currentUser.displayName,
       room,
     });
